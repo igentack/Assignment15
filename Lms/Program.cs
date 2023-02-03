@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Lms.Data.Data;
+using Lms.Data.AutoMApper;
 using Lms.API.Extensions;
-using Lms.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<LmsDataContext>(options =>

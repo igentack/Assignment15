@@ -9,12 +9,12 @@ using Lms.Core.DTOs;
 
 namespace Lms.Data.Data.AutoMapper
 {
-    internal class MapperProfile : Profile
+    public class MapperProfile : Profile
     {
 
         public MapperProfile()
         {
-            CreateMap<Tournament, LmsDto>();
+            CreateMap<Tournament, LmsDto>().ReverseMap();
         }
     }
 }
