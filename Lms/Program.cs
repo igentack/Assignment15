@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Lms.Data.Data;
-using Lms.Data.AutoMApper;
+using Lms.Data.Data.AutoMapper;
 using Lms.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Bogus.DataSets;
 using Lms.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,34 +19,58 @@ namespace Lms.Data.Data
             if (context is null) throw new ArgumentNullException(nameof(context));
             db = context;
 
-            if (await db.Tournament.AnyAsync()) return;
+            //if (await db.Tournament.AnyAsync()) return;
 
-            var faker = new Faker("sv");
-            var events = new List<Tournament>();
+            //var faker = new Faker("sv");
+            //var events = new List<Tournament>();
 
 
-            for (int i = 0; i < 50; i++)
+            //for (int i = 0; i < 50; i++)
+            //{
+            //    events.Add(new Tournament
+
+            //    {
+            //        Title = faker.Company.CompanySuffix() + faker.Random.Word(),
+            //        StartDate = DateTime.Now.AddDays(faker.Random.Int(-20, 20)),
+            //        Games = new Game[] {
+            //        new Game
+            //        {
+            //            Title = faker.Company.CompanyName(),
+            //            Time = DateTime.Now.AddHours(faker.Random.Int(-20, 20)),     
+            //        },
+            //       }
+
+            //    });
+
+            //}
+
+            //db.AddRange(events);
+            //await db.SaveChangesAsync();
+            if (db.Tournaments.Any())
             {
-                events.Add(new Tournament
+                var tournaments = new Faker<Tournament>()
+                   .RuleFor(t => t.Title, f => f.Name.FullName())
+                   .RuleFor(t => t.StartDate, f => f.Internet.Avatar())
+                   .Generate(50);
 
+                foreach (var tournament in tournaments)
                 {
-                    Title = faker.Company.CompanySuffix() + faker.Random.Word(),
-                    StartDate = DateTime.Now.AddDays(faker.Random.Int(-20, 20)),
-                    Games = new Game[] {
-                    new Game
+                    var games = new Faker<Game>()
+                       .RuleFor(p => p.Title, f => f.Lorem.Sentence())
+                       .RuleFor(p => p.Time, f => DateTime.Now.AddDays(Random(-20, 20)),)
+                       .Generate(new Random().Next(1, 5));
+
+                    foreach (var game in games)
                     {
-                        Title = faker.Company.CompanyName(),
-                        Time = DateTime.Now.AddHours(faker.Random.Int(-20, 20)),     
-                    },
-                   }
+                        game.Tournament = tournament;
+                        tournament.Tournaments.Add(game);
+                    }
 
-                });
+                    db.Tournaments.Add(tournament);
+                }
 
+                db.SaveChanges();
             }
-
-            db.AddRange(events);
-            await db.SaveChangesAsync();
-
 
         }
     }
