@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Lms.Data.Data;
 using Lms.Core.Entities;
+using AutoMapper;
 
 namespace Lms.API.Controllers
 {
@@ -15,6 +16,7 @@ namespace Lms.API.Controllers
     public class TournamentsController : ControllerBase
     {
         private readonly LmsDataContext _context;
+        private readonly IMapper mapper;
 
         public TournamentsController(LmsDataContext context)
         {

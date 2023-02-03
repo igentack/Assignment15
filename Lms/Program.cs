@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Lms.Data.Data;
 using Lms.API.Extensions;
+using Lms.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<LmsDataContext>(options =>
@@ -16,6 +17,7 @@ builder.Services.AddControllers(opt => opt.ReturnHttpNotAcceptable = true)
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 var app = builder.Build();
 
