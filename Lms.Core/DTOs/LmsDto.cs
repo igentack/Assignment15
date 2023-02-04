@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lms.Core.DTOs
 {
+#nullable disable
     public class LmsDto
     {
         public string Title { get; set; }

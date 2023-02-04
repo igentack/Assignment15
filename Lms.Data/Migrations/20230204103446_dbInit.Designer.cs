@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lms.Data.Migrations
 {
     [DbContext(typeof(LmsDataContext))]
-    [Migration("20230203130341_newSeed")]
-    partial class newSeed
+    [Migration("20230204103446_dbInit")]
+    partial class dbInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,7 @@ namespace Lms.Data.Migrations
 
                     b.HasIndex("TournamentId");
 
-                    b.ToTable("Game");
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("Lms.Core.Entities.Tournament", b =>
@@ -65,16 +65,18 @@ namespace Lms.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tournament");
+                    b.ToTable("Tournaments");
                 });
 
             modelBuilder.Entity("Lms.Core.Entities.Game", b =>
                 {
-                    b.HasOne("Lms.Core.Entities.Tournament", null)
+                    b.HasOne("Lms.Core.Entities.Tournament", "Tournament")
                         .WithMany("Games")
                         .HasForeignKey("TournamentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Tournament");
                 });
 
             modelBuilder.Entity("Lms.Core.Entities.Tournament", b =>

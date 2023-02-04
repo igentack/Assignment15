@@ -27,22 +27,22 @@ namespace Lms.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tournament>>> GetTournament()
         {
-          if (_context.Tournament == null)
+          if (_context.Tournaments == null)
           {
               return NotFound();
           }
-            return await _context.Tournament.ToListAsync();
+            return await _context.Tournaments.ToListAsync();
         }
 
         // GET: api/Tournaments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Tournament>> GetTournament(int id)
         {
-          if (_context.Tournament == null)
+          if (_context.Tournaments == null)
           {
               return NotFound();
           }
-            var tournament = await _context.Tournament.FindAsync(id);
+            var tournament = await _context.Tournaments.FindAsync(id);
 
             if (tournament == null)
             {
@@ -88,11 +88,11 @@ namespace Lms.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Tournament>> PostTournament(Tournament tournament)
         {
-          if (_context.Tournament == null)
+          if (_context.Tournaments == null)
           {
               return Problem("Entity set 'LmsAPIContext.Tournament'  is null.");
           }
-            _context.Tournament.Add(tournament);
+            _context.Tournaments.Add(tournament);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTournament", new { id = tournament.Id }, tournament);
@@ -102,17 +102,17 @@ namespace Lms.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTournament(int id)
         {
-            if (_context.Tournament == null)
+            if (_context.Tournaments == null)
             {
                 return NotFound();
             }
-            var tournament = await _context.Tournament.FindAsync(id);
+            var tournament = await _context.Tournaments.FindAsync(id);
             if (tournament == null)
             {
                 return NotFound();
             }
 
-            _context.Tournament.Remove(tournament);
+            _context.Tournaments.Remove(tournament);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -120,7 +120,7 @@ namespace Lms.API.Controllers
 
         private bool TournamentExists(int id)
         {
-            return (_context.Tournament?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Tournaments?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

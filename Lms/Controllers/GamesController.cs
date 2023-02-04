@@ -27,22 +27,22 @@ namespace Lms.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetGame()
         {
-          if (_context.Game == null)
+          if (_context.Games == null)
           {
               return NotFound();
           }
-            return await _context.Game.ToListAsync();
+            return await _context.Games.ToListAsync();
         }
 
         // GET: api/Games/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGame(int id)
         {
-          if (_context.Game == null)
+          if (_context.Games == null)
           {
               return NotFound();
           }
-            var game = await _context.Game.FindAsync(id);
+            var game = await _context.Games.FindAsync(id);
 
             if (game == null)
             {
@@ -88,11 +88,11 @@ namespace Lms.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Game>> PostGame(Game game)
         {
-          if (_context.Game == null)
+          if (_context.Games == null)
           {
               return Problem("Entity set 'LmsAPIContext.Game'  is null.");
           }
-            _context.Game.Add(game);
+            _context.Games.Add(game);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetGame", new { id = game.Id }, game);
@@ -102,17 +102,17 @@ namespace Lms.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGame(int id)
         {
-            if (_context.Game == null)
+            if (_context.Games == null)
             {
                 return NotFound();
             }
-            var game = await _context.Game.FindAsync(id);
+            var game = await _context.Games.FindAsync(id);
             if (game == null)
             {
                 return NotFound();
             }
 
-            _context.Game.Remove(game);
+            _context.Games.Remove(game);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -120,7 +120,7 @@ namespace Lms.API.Controllers
 
         private bool GameExists(int id)
         {
-            return (_context.Game?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Games?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

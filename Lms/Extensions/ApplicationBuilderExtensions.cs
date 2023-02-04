@@ -13,7 +13,7 @@ namespace Lms.API.Extensions
 
                 try
                 {
-                    await SeedData.InitAsync(db);
+                    SeedData.InitAsync(db);
                 }
                 catch (Exception err)
                 {
